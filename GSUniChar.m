@@ -154,7 +154,7 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
       scanner = [NSScanner scannerWithString: aString];
       [scanner scanHexInt: &unsignedValue];
       if (unsignedValue < MAX_UNICHAR)
-        _uppercase = (unichar)unsignedValue;
+        _uppercase = (UTF32Char)unsignedValue;
     }
 
   // lowercase mapping
@@ -165,7 +165,7 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
       scanner = [NSScanner scannerWithString: aString];
       [scanner scanHexInt: &unsignedValue];
       if (unsignedValue < MAX_UNICHAR)
-        _lowercase = (unichar)unsignedValue;
+        _lowercase = (UTF32Char)unsignedValue;
     }
 
   // titlecase mapping
@@ -176,7 +176,7 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
       scanner = [NSScanner scannerWithString: aString];
       [scanner scanHexInt: &unsignedValue];
       if (unsignedValue < MAX_UNICHAR)
-        _titlecase = (unichar)unsignedValue;
+        _titlecase = (UTF32Char)unsignedValue;
     }
 
   return self;
@@ -199,7 +199,7 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
   [super dealloc];
 }
 
-- (unichar) character
+- (UTF32Char) character
 {
   return _character;
 }
@@ -259,17 +259,17 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
   return _comment;
 }
 
-- (unichar) uppercaseMapping
+- (UTF32Char) uppercaseMapping
 {
   return _uppercase;
 }
 
-- (unichar) lowercaseMapping
+- (UTF32Char) lowercaseMapping
 {
   return _lowercase;
 }
 
-- (unichar) titlecaseMapping
+- (UTF32Char) titlecaseMapping
 {
   return _titlecase;
 }

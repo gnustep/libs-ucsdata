@@ -34,6 +34,6 @@
 
 - (id) initWithContentsOfFile: (NSString *)path;
 
-- (GSUniChar *) entryForCharacter: (unichar)ch;
+- (GSUniChar *) entryForCharacter: (UTF32Char)ch;
 - (NSEnumerator *) objectEnumerator;
 @end

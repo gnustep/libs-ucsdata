@@ -23,7 +23,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define MAX_UNICHAR	65536
+// Sixteen planes of 65536 characters
+#define MAX_UNICHAR	(65536*16)
 
 typedef enum
 {
@@ -96,7 +97,7 @@ typedef enum
 
 @interface GSUniChar : NSObject
 {
-  unichar		_character;
+  UTF32Char		_character;
   NSString		*_name;
   UCDGeneralCategory	_genCat;
   UCDCanonicalCombiningClass	_combiningClass;
@@ -108,15 +109,15 @@ typedef enum
   BOOL			_mirrored;
   NSString		*_oldname;
   NSString		*_comment;
-  unichar		_uppercase;
-  unichar		_lowercase;
-  unichar		_titlecase;
+  UTF32Char		_uppercase;
+  UTF32Char		_lowercase;
+  UTF32Char		_titlecase;
 }
 
 - (id) initWithArray: (NSArray *)anArray;
 - (id) initWithString: (NSString *)line;
 
-- (unichar) character;
+- (UTF32Char) character;
 - (NSString *) name;
 - (UCDGeneralCategory) generalCategory;
 - (UCDCanonicalCombiningClass) canonicalCombiningClass;
@@ -128,8 +129,8 @@ typedef enum
 - (BOOL) isMirrored;
 - (NSString *) oldName;
 - (NSString *) comment;
-- (unichar) uppercaseMapping;
-- (unichar) lowercaseMapping;
-- (unichar) titlecaseMapping;
+- (UTF32Char) uppercaseMapping;
+- (UTF32Char) lowercaseMapping;
+- (UTF32Char) titlecaseMapping;
 
 @end

@@ -147,7 +147,7 @@
   [super dealloc];
 }
 
-- (GSUniChar *) entryForCharacter: (unichar)ch
+- (GSUniChar *) entryForCharacter: (UTF32Char)ch
 {
   return NSMapGet(_ucdEntries, (void *)((unsigned)ch));
 }
