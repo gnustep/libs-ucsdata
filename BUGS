@@ -1,0 +1,7 @@
+   The methods to get a character's combining class, bi-directional category,
+and numeric value are not yet implemented.  The method to get the decomposition
+mapping simply returns that field as a string, but this is sufficient to tell
+whether that character has a decomposed equivalent, at least.
+   The GNUstep Base Library currently defines type 'unichar' as a 16-bit value.
+It does not yet support surrogate pairs.  Hence, the GNUstep Unicode Character
+Data Library ignores characters with values above 65,536.

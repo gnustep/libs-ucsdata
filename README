@@ -1,0 +1,22 @@
+Introduction
+************
+
+The GNUstep Unicode Character Set Data Library is a small library which loads
+the contents of the file UnicodeData.txt into a set of Objective C objects.
+
+Installation
+============
+   Install the library as any GNUstep library.
+   Get the file <ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt> and
+place it in a sub-directory called "Unicode" in one of the "Library"
+directories in the standard system search path.  For example,
+   $(GNUSTEP_LOCAL_ROOT)/Library/Unicode/
+
+Use
+===
+   Use the +unicodeData class method of GSUnicodeData to get an object which
+contains the Unicode character database.  Then, use the entryForCharacter:
+method to access data by character value, or use the object enumerator to
+enumerate all of the available characters.  Each character's data is stored
+in a GSUniChar object, which has methods to return the data from each of the
+fields from its entry in the database.
