@@ -128,7 +128,8 @@
       if (ucdEntry != nil)
         {
           mapValue = (unsigned)[ucdEntry character];
-          NSMapInsertKnownAbsent(_ucdEntries, (void *)mapValue, ucdEntry);
+          NSMapInsertKnownAbsent(_ucdEntries,
+	    (void *)(uintptr_t)mapValue, ucdEntry);
         }
 
       range = NSMakeRange(lineEnd, 1);
@@ -149,7 +150,7 @@
 
 - (GSUniChar *) entryForCharacter: (UTF32Char)ch
 {
-  return NSMapGet(_ucdEntries, (void *)((unsigned)ch));
+  return NSMapGet(_ucdEntries, (void *)(uintptr_t)((unsigned)ch));
 }
 
 - (NSEnumerator *) objectEnumerator
