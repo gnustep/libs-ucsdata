@@ -23,8 +23,8 @@
 
 #import <Foundation/Foundation.h>
 
-// Sixteen planes of 65536 characters
-#define MAX_UNICHAR	(65536*16)
+// Seventeen planes of 65536 characters
+#define MAX_UNICHAR	(65536*17)
 
 typedef enum
 {

@@ -131,6 +131,10 @@
           NSMapInsertKnownAbsent(_ucdEntries,
 	    (void *)(uintptr_t)mapValue, ucdEntry);
         }
+      else
+	{
+	  NSLog(@"Bad line '%@'", line);
+	}
 
       range = NSMakeRange(lineEnd, 1);
       [subpool release];
