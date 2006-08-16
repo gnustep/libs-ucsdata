@@ -24,7 +24,7 @@
 
 #import "GSUniChar.h"
 
-#define NUM_CATEGORIES	((int)(UCDSymbolOtherCategory))
+#define NUM_CATEGORIES	((int)(UCDSymbolOtherCategory) + 1)
 
 struct UCDCategoryMap
 {
@@ -33,35 +33,36 @@ struct UCDCategoryMap
 };
 
 struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
-  { @"Lo", UCDLetterOtherCategory },      //  5228 chars
-  { @"So", UCDSymbolOtherCategory },      //  2005 chars
-  { @"Ll", UCDLetterLowercaseCategory },  //  840 chars
-  { @"Lu", UCDLetterUppercaseCategory },  //  686 chars
-  { @"Mn", UCDMarkNonSpacingCategory },   //  447 chars
-  { @"Sm", UCDSymbolMathCategory },       //  299 chars
-  { @"Nd", UCDNumberDecimalDigitCategory },   // 198 chars
-  { @"No", UCDNumberOtherCategory },      //  186 chars
-  { @"Po", UCDPunctuationOtherCategory }, //  185 chars
-  { @"Mc", UCDMarkSpacingCombiningCategory }, // 118 chars
-  { @"Sk", UCDSymbolModifierCategory },   //  69 chars
-  { @"Cc", UCDControlCategory },          //  65 chars
-  { @"Nl", UCDNumberLetterCategory },     //  49 chars
-  { @"Lm", UCDLetterModifierCategory },   //  46 chars
-  { @"Ps", UCDPunctuationOpenCategory },  //  39 chars
-  { @"Pe", UCDPunctuationCloseCategory }, //  37 chars
-  { @"Lt", UCDLetterTitlecaseCategory },  //  31 chars
-  { @"Sc", UCDSymbolCurrencyCategory },   //  31 chars
-  { @"Cf", UCDFormatCategory },           //  24 chars
-  { @"Pd", UCDPunctuationDashCategory },  //  17 chars
-  { @"Zs", UCDSeparatorSpaceCategory },   //  17 chars
-  { @"Pc", UCDPunctuationConnectorCategory }, //  11 chars
-  { @"Me", UCDMarkEnclosingCategory },    //  10 chars
-  { @"Pi", UCDPunctuationInitialQuoteCategory }, //  6 chars
-  { @"Co", UCDPrivateUseCategory },       //  6 chars
-  { @"Cs", UCDSurrogateCategory },        //  6 chars
-  { @"Pf", UCDPunctuationFinalQuoteCategory },   //  4 chars
-  { @"Zl", UCDSeparatorLineCategory },    //  1 char
-  { @"Zp", UCDSeparatorParagraphCategory },   //  1 char
+  { @"Cc", UCDControlCategory },
+  { @"Cf", UCDFormatCategory },
+  { @"Cn", UCDNotAssignedCategory },
+  { @"Co", UCDPrivateUseCategory },
+  { @"Cs", UCDSurrogateCategory },
+  { @"Ll", UCDLetterLowercaseCategory },
+  { @"Lm", UCDLetterModifierCategory },
+  { @"Lo", UCDLetterOtherCategory },
+  { @"Lt", UCDLetterTitlecaseCategory },
+  { @"Lu", UCDLetterUppercaseCategory },
+  { @"Mc", UCDMarkSpacingCombiningCategory },
+  { @"Me", UCDMarkEnclosingCategory },
+  { @"Mn", UCDMarkNonSpacingCategory },
+  { @"Nd", UCDNumberDecimalDigitCategory },
+  { @"Nl", UCDNumberLetterCategory },
+  { @"No", UCDNumberOtherCategory },
+  { @"Pc", UCDPunctuationConnectorCategory },
+  { @"Pd", UCDPunctuationDashCategory },
+  { @"Pe", UCDPunctuationCloseCategory },
+  { @"Pf", UCDPunctuationFinalQuoteCategory },
+  { @"Pi", UCDPunctuationInitialQuoteCategory },
+  { @"Po", UCDPunctuationOtherCategory },
+  { @"Ps", UCDPunctuationOpenCategory },
+  { @"Sc", UCDSymbolCurrencyCategory },
+  { @"Sk", UCDSymbolModifierCategory },
+  { @"Sm", UCDSymbolMathCategory },
+  { @"So", UCDSymbolOtherCategory },
+  { @"Zl", UCDSeparatorLineCategory },
+  { @"Zp", UCDSeparatorParagraphCategory },
+  { @"Zs", UCDSeparatorSpaceCategory }
 };
 
 @implementation GSUniChar
