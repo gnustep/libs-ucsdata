@@ -1,8 +1,9 @@
 /*
-   Copyright (C) 2001 Free Software Foundation, Inc.
+   Copyright (C) 2001,2006 Free Software Foundation, Inc.
 
    Written by:  Jonathan Gapen  <jagapen@home.com>
    Date: March 2001
+   Update by: Richard Frith-Macdonald <rfm@gnu.org>
 
    This file is part of the GNUstep Unicode Character Set Data Library.
 
@@ -65,6 +66,13 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
 
 @implementation GSUniChar
 
+static NSMutableDictionary	*firstInRange = nil;
+
++ (void) initialize
+{
+  firstInRange = [NSMutableDictionary new];
+}
+
 - (id) initWithArray: (NSArray *)anArray
 {
   NSScanner *scanner;
@@ -74,20 +82,47 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
 
   [super init];
 
+  _numberOfCharacters = 1;
   // character value
   scanner = [NSScanner scannerWithString: [anArray objectAtIndex: 0]];
   [scanner scanHexInt: &unsignedValue];
   if (unsignedValue < MAX_UNICHAR)
-    _character = unsignedValue;
+    {
+      _character = unsignedValue;
+    }
   else
     {
-      // NSLog(@"Found character value %x", unsignedValue);
       [self dealloc];
       return nil;
     }
 
-  // name
-  _name = [[anArray objectAtIndex: 1] retain];
+  /* If this is actually the end of a range ... look up the first value in
+   * the range, adjust the range length, and return the first value.
+   */
+  aString = [anArray objectAtIndex: 1];
+  if ([aString hasSuffix: @" Last>"] == YES)
+    {
+      GSUniChar	*found;
+
+      aString = [[aString substringToIndex: [aString length] - 5]
+        stringByAppendingString: @"First>"];
+      found = [firstInRange objectForKey: aString];
+      if (found != nil)
+        {
+	  found->_numberOfCharacters = _character - found->_character;
+	}
+      RETAIN(found);
+      [firstInRange removeObjectForKey: aString];
+      RELEASE(self);
+      return found;
+    }
+
+  _name = [aString copy];
+  if ([_name hasSuffix: @" First>"] == YES)
+    {
+      _isRange = YES;
+      [firstInRange setObject: self forKey: _name];
+    }
 
   // general category
   _genCat = UCDNotAssignedCategory;
@@ -110,7 +145,7 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
   _biDirCat = 0;
 
   // decomposition mapping
-  _decomp = [[anArray objectAtIndex: 5] retain];
+  _decomp = [[anArray objectAtIndex: 5] copy];
 
   // decimal digit value
   aString = [anArray objectAtIndex: 6];
@@ -141,10 +176,10 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
     _mirrored = NO;
 
   // Unicode 1.0 name
-  _oldname = [[anArray objectAtIndex: 10] retain];
+  _oldname = [[anArray objectAtIndex: 10] copy];
 
   // 10646 comment field
-  _comment = [[anArray objectAtIndex: 11] retain];
+  _comment = [[anArray objectAtIndex: 11] copy];
 
   // uppercase mapping
   _uppercase = unsignedValue = 0;
@@ -204,6 +239,11 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
   return _character;
 }
 
+- (NSRange) range
+{
+  return NSMakeRange(_character, _numberOfCharacters);
+}
+
 - (NSString *) name
 {
   return _name;
@@ -247,6 +287,11 @@ struct UCDCategoryMap categoryMap[NUM_CATEGORIES] = {
 - (BOOL) isMirrored
 {
   return _mirrored;
+}
+
+- (BOOL) isRange
+{
+  return _isRange;
 }
 
 - (NSString *) oldName

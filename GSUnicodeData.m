@@ -1,8 +1,9 @@
 /*
-   Copyright (C) 2001 Free Software Foundation, Inc.
+   Copyright (C) 2001,2006 Free Software Foundation, Inc.
 
    Written by:  Jonathan Gapen  <jagapen@home.com>
    Date: March 2001
+   Update by: Richard Frith-Macdonald <rfm@gnu.org>
 
    This file is part of the GNUstep Unicode Character Set Data Library.
 
@@ -128,8 +129,7 @@
       if (ucdEntry != nil)
         {
           mapValue = (unsigned)[ucdEntry character];
-          NSMapInsertKnownAbsent(_ucdEntries,
-	    (void *)(uintptr_t)mapValue, ucdEntry);
+          NSMapInsert(_ucdEntries, (void *)(uintptr_t)mapValue, ucdEntry);
         }
       else
 	{

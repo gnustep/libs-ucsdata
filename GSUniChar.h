@@ -1,8 +1,9 @@
 /*
-   Copyright (C) 2001 Free Software Foundation, Inc.
+   Copyright (C) 2001,2006 Free Software Foundation, Inc.
 
    Written by:  Jonathan Gapen  <jagapen@home.com>
    Date: March 2001
+   Updated by:  Richard Frith-Macdonald <rfm@gnu.org>
 
    This file is part of the GNUstep Unicode Character Set Data Library.
 
@@ -98,6 +99,7 @@ typedef enum
 @interface GSUniChar : NSObject
 {
   UTF32Char		_character;
+  unsigned		_numberOfCharacters;
   NSString		*_name;
   UCDGeneralCategory	_genCat;
   UCDCanonicalCombiningClass	_combiningClass;
@@ -107,6 +109,7 @@ typedef enum
   int			_digitValue;
   NSDecimal		_numericValue;
   BOOL			_mirrored;
+  BOOL			_isRange;
   NSString		*_oldname;
   NSString		*_comment;
   UTF32Char		_uppercase;
@@ -119,6 +122,7 @@ typedef enum
 
 - (UTF32Char) character;
 - (NSString *) name;
+- (NSRange) range;
 - (UCDGeneralCategory) generalCategory;
 - (UCDCanonicalCombiningClass) canonicalCombiningClass;
 - (UCDBidirectionalCategory) bidirectionalCategory;
@@ -127,10 +131,10 @@ typedef enum
 - (int) digitValue;
 - (NSDecimal) numericValue;
 - (BOOL) isMirrored;
+- (BOOL) isRange;
 - (NSString *) oldName;
 - (NSString *) comment;
 - (UTF32Char) uppercaseMapping;
 - (UTF32Char) lowercaseMapping;
 - (UTF32Char) titlecaseMapping;
-
 @end
