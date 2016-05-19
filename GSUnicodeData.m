@@ -92,55 +92,56 @@
   NSData *data;
   NSString *dbString, *line;
   NSRange range;
-  unsigned stringEnd, lineStart, lineEnd, contentEnd, mapValue;
+  NSUInteger stringEnd, lineStart, lineEnd, contentEnd, mapValue;
   GSUniChar *ucdEntry;
 
-  [super init];
-  _ucdEntries = NSCreateMapTable(NSIntMapKeyCallBacks,
-                                 NSObjectMapValueCallBacks, 65536);
-
-  data = [NSData dataWithContentsOfFile: path];
-  if (data == nil)
+  if (nil != (self = [super init]))
     {
-      [self dealloc];
-      return nil;
-    }
+      _ucdEntries = NSCreateMapTable(NSIntMapKeyCallBacks,
+                                     NSObjectMapValueCallBacks, 65536);
 
-  dbString = [[NSString alloc] initWithData: data
-                                   encoding: NSASCIIStringEncoding];
-  if (dbString == nil)
-    {
-      [self dealloc];
-      return nil;
-    }
-
-  range = NSMakeRange(0, 1);
-  stringEnd = [dbString length];
-  do
-    {
-      NSAutoreleasePool *subpool = [NSAutoreleasePool new];
-      [dbString getLineStart: &lineStart
-                   end: &lineEnd
-           contentsEnd: &contentEnd
-              forRange: range];
-      line = [dbString substringWithRange:
-                         NSMakeRange(lineStart, contentEnd - lineStart)];
-      ucdEntry = [[GSUniChar alloc] initWithString: line];
-      if (ucdEntry != nil)
+      data = [NSData dataWithContentsOfFile: path];
+      if (data == nil)
         {
-          mapValue = (unsigned)[ucdEntry character];
-          NSMapInsert(_ucdEntries, (void *)(uintptr_t)mapValue, ucdEntry);
+          [self dealloc];
+          return nil;
         }
-      else
-	{
-	  NSLog(@"Bad line '%@'", line);
-	}
 
-      range = NSMakeRange(lineEnd, 1);
-      [subpool release];
+      dbString = [[NSString alloc] initWithData: data
+                                       encoding: NSASCIIStringEncoding];
+      if (dbString == nil)
+        {
+          [self dealloc];
+          return nil;
+        }
+
+      range = NSMakeRange(0, 1);
+      stringEnd = [dbString length];
+      do
+        {
+          NSAutoreleasePool *subpool = [NSAutoreleasePool new];
+          [dbString getLineStart: &lineStart
+                       end: &lineEnd
+               contentsEnd: &contentEnd
+                  forRange: range];
+          line = [dbString substringWithRange:
+                             NSMakeRange(lineStart, contentEnd - lineStart)];
+          ucdEntry = [[GSUniChar alloc] initWithString: line];
+          if (ucdEntry != nil)
+            {
+              mapValue = (unsigned)[ucdEntry character];
+              NSMapInsert(_ucdEntries, (void *)(uintptr_t)mapValue, ucdEntry);
+            }
+          else
+            {
+              NSLog(@"Bad line '%@'", line);
+            }
+
+          range = NSMakeRange(lineEnd, 1);
+          [subpool release];
+        }
+      while (lineEnd < stringEnd);
     }
-  while (lineEnd < stringEnd);
-
   return self;
 }
 
